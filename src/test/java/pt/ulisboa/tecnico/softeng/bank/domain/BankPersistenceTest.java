@@ -18,7 +18,11 @@ public class BankPersistenceTest {
 
 	@Atomic(mode = TxMode.WRITE)
 	public void atomicProcess() {
-		new Bank("Money", "BK01");
+		Bank bank = new Bank("Money", "BK01");
+    new Account(bank, "01");
+    new Account(bank, "02");
+    new Account(bank, "03");
+    new Account(bank, "04");
 	}
 
 	@Atomic(mode = TxMode.READ)
@@ -26,6 +30,7 @@ public class BankPersistenceTest {
 		Bank bank = Bank.getBankByCode("BK01");
 
 		assertEquals("Money", bank.getName());
+    assertEquals(400, bank.totalBalance());
 	}
 
 	@After
